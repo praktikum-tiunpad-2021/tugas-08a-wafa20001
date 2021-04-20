@@ -9,7 +9,9 @@ namespace priority_queue {
  */
 template <typename T>
 struct Element {
-  // Implementasikan di sini.
+  int data;
+  int priority;
+  Element *next;
 };
 
 template <typename T>
@@ -20,7 +22,8 @@ using ElementPtr = Element<T> *;
  */
 template <typename T>
 struct Queue {
-  // Implementasikan di sini.
+  T head;
+  T tail;
 };
 
 /**
@@ -30,7 +33,8 @@ struct Queue {
  */
 template <typename T>
 Queue<T> new_queue() {
-  // Implementasikan di sini.
+  q.head = nullptr;
+  q.tail = nullptr;
 }
 
 /**
@@ -42,7 +46,33 @@ Queue<T> new_queue() {
  */
 template <typename T>
 void enqueue(Queue<T> &q, const T &value, int priority) {
-  // Implementasikan di sini.
+  value->priority = priority;
+ T pRev = nullptr;
+ T pHelp = q.head;
+ if(isEmpty(q)){
+   q.head = value;
+   q.tail = value;
+ }
+ else{
+   while(value->priority >= pHelp->priority){
+     if(pHelp->next == nullptr)
+     break;
+     pRev = pHelp;
+     pHelp = pHelp->next;
+   }
+   if(pHelp == q.head && value->priority < pHelp->priority){
+     value->next = pHelp;
+     q.head = value;
+   } 
+   else if(pHelp == q.tail && value->priority > pHelp->priority){
+     pHelp->next = value;
+     q.tail = value;
+   }
+   else {
+     pRev->next = value;
+     value->next = pHelp;
+   }
+ }
 }
 
 /**
@@ -53,7 +83,7 @@ void enqueue(Queue<T> &q, const T &value, int priority) {
  */
 template <typename T>
 T top(const Queue<T> &q) {
-  // Implementasikan di sini.
+  return q.head->data;
 }
 
 /**
@@ -63,7 +93,18 @@ T top(const Queue<T> &q) {
  */
 template <typename T>
 void dequeue(Queue<T> &q) {
-  // Implementasikan di sini.
+  T pDel;
+  if(queue(T) = 0){
+    pDel = nullptr;
+  } else if(q.head == nullptr){
+    pDel = q.head;
+    q.head = nullptr;
+    q.tail = nullptr;
+  } else {
+    pDel = q.head;
+    q.head = q.head->next;
+    pDel->next = nullptr;
+  }
 }
 
 }  // namespace priority_queue
